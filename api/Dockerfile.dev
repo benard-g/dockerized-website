@@ -7,4 +7,7 @@ WORKDIR /app
 EXPOSE 3000
 
 CMD npm install \
+    && rm -rf build \
+    && npm run build \
+    && npm run typeorm -- migration:run \
     && npm run dev
