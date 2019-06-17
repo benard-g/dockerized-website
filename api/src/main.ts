@@ -1,5 +1,11 @@
+import Server from "./Server";
+import { createRouter } from "./router";
+
+
 const main = () => {
-    console.log("Hello world !");
+    const router = createRouter();
+    const server = new Server(router);
+    server.start(3000);
 };
 
 
