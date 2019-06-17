@@ -1,4 +1,4 @@
-import App, { Express, Router, Request, Response, NextFunction } from "express";
+import ExpressApp, { Express, Router, Request, Response, NextFunction } from "express";
 import Morgan from "morgan";
 import Boom from "@hapi/boom";
 
@@ -7,10 +7,13 @@ class Server {
     private readonly app: Express;
 
     constructor(router: Router) {
-        this.app = App();
+        this.app = ExpressApp();
 
+        this.app.use(ExpressApp.json());
         this.app.use(Morgan("dev"));
+
         this.app.use(router);
+
         this.add404Handler();
         this.addErrorHandler();
     }
