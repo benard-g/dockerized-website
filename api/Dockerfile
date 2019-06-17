@@ -1,0 +1,20 @@
+FROM node:11.15.0-alpine
+
+WORKDIR /app
+
+# Install node_modules
+COPY package*.json ./
+RUN npm install
+
+# Copy and install application
+WORKDIR /app/tmp-build
+COPY ./ ./
+RUN ln -s ../node_modules \
+    && npm run build \
+    && cp -r build /app/build \
+    && rm -r /app/tmp-build
+WORKDIR /app
+
+EXPOSE 3000
+
+CMD npm run start
