@@ -1,4 +1,4 @@
-FROM node:11.15.0-alpine
+FROM benardg/node-bcrypt
 
 WORKDIR /app
 
