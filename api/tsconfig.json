@@ -1,11 +1,13 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es6",
         "module": "commonjs",
         "sourceMap": true,
         "outDir": "./build/",
         "rootDir": "./src/",
         "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
 
         /* Strict Type-Checking Options */
         "strict": true,
