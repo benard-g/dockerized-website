@@ -1,0 +1,27 @@
+import { Connection } from "typeorm";
+
+import User from "./entities/User";
+
+
+class UserRepository {
+    private readonly conn: Connection;
+
+    constructor(conn: Connection) {
+        this.conn = conn;
+    }
+
+    public readonly create = async (user: User): Promise<User> => {
+        return this.conn
+            .getRepository(User)
+            .save(user);
+    };
+
+    public readonly getUserByEmail = async (email: string): Promise<User | undefined> => {
+        return this.conn
+            .getRepository(User)
+            .findOne({ where: { email: email } });
+    };
+}
+
+
+export default UserRepository;
