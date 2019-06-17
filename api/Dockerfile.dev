@@ -1,0 +1,10 @@
+FROM node:11.15.0-alpine
+
+# Create application's directory
+VOLUME /app
+WORKDIR /app
+
+EXPOSE 3000
+
+CMD npm install \
+    && npm run dev
