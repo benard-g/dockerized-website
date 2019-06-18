@@ -2,11 +2,10 @@ import { Entity, Column, PrimaryGeneratedColumn, Index } from "typeorm";
 
 
 type UserData = {
-    name: string,
     email: string,
+    name: string,
     cipheredPassword: string
 };
-
 
 @Entity("user")
 class User {

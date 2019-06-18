@@ -1,4 +1,5 @@
 class EmailValidator {
+
     private readonly emailRegex: RegExp;
 
     constructor() {

@@ -4,6 +4,7 @@ import Boom from "@hapi/boom";
 
 
 class Server {
+
     private readonly app: Express;
 
     constructor(router: Router) {

@@ -12,6 +12,7 @@ import PasswordService from "../services/PasswordService";
 
 
 class AuthLocalController {
+
     private readonly userRepository: UserRepository;
 
     private readonly emailValidator: EmailValidator;
@@ -42,7 +43,7 @@ class AuthLocalController {
         const userPassword: string = req.body.password;
 
         if (!userName || !userEmail || !userPassword) {
-            throw Boom.badRequest("Invalid fields in user");
+            throw Boom.badRequest("Missing fields in user");
         }
         if (!this.emailValidator.validate(userEmail)) {
             throw Boom.badRequest("Invalid email format");

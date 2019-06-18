@@ -4,6 +4,7 @@ import User from "./entities/User";
 
 
 class UserRepository {
+
     private readonly conn: Connection;
 
     constructor(conn: Connection) {
