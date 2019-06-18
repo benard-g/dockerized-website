@@ -19,7 +19,7 @@ At the root of the project, run the following:
 # If you want to start everything
 docker-compose up
 
-# To start in background
+# To start it in background
 docker-compose up -d
 
 # If you just want to start the api
@@ -38,6 +38,6 @@ To stop all working services, run the following:
 # Stop running containers
 docker-compose down
 
-# Stop running container and clean existing volumes
+# Stop running containers and clean existing volumes
 docker-compose down -v
 ```
