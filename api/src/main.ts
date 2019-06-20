@@ -9,28 +9,37 @@ import UserRepository from "./models/UserRepository";
 
 import EmailValidator from "./validators/EmailValidator";
 import NameValidator from "./validators/NameValidator";
+import PasswordValidator from "./validators/PasswordValidator";
 
+import JwtService from "./services/JwtService";
 import PasswordService from "./services/PasswordService";
+
+import * as AuthenticatedOnly from "./middlewares/authenticatedOnly";
 
 import ApiEndpointController from "./controllers/ApiEndpointController";
 import AuthLocalController from "./controllers/AuthLocalController";
-import PasswordValidator from "./validators/PasswordValidator";
+import UserController from "./controllers/UserController";
 
 
 function main(): void {
     const dbConfig = DbConfig.load("../ormconfig.js");
 
+    const jwtSecretKey = process.env.JWT_SECRET_KEY;
+    if (!jwtSecretKey) {
+        throw new Error('Missing environment variable "JWT_SECRET_KEY"');
+    }
+
     createConnection(dbConfig)
         .then((conn: Connection) => {
             console.info("Connected to database");
 
-            const server = createServer(conn);
+            const server = createServer(conn, jwtSecretKey);
 
             server.start(3000);
         });
 };
 
-function createServer(conn: Connection): Server {
+function createServer(conn: Connection, jwtSecretKey: string): Server {
     // Create Repositories
     const userRepository = new UserRepository(conn);
 
@@ -40,6 +49,7 @@ function createServer(conn: Connection): Server {
     const passwordValidator = new PasswordValidator();
 
     // Create Services
+    const jwtService = new JwtService(jwtSecretKey);
     const passwordService = new PasswordService();
 
     // Create Controllers
@@ -49,13 +59,21 @@ function createServer(conn: Connection): Server {
         emailValidator,
         nameValidator,
         passwordValidator,
-        passwordService
+        passwordService,
+        jwtService
     );
+    const userController = new UserController();
+
+    // Create middlwares
+    const authenticatedOnlyMiddleware = AuthenticatedOnly.generateMiddleware(userRepository, jwtService);
 
     // Create router and server
     const router = createRouter(
         apiEndpointController,
-        authLocalController
+        authLocalController,
+        userController,
+
+        authenticatedOnlyMiddleware
     );
     return new Server(router);
 }

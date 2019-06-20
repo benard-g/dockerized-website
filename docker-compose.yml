@@ -17,6 +17,7 @@ services:
       DB_NAME: postgres
       DB_USER: postgres
       DB_PASSWORD: password
+      JWT_SECRET_KEY: secret
 
   db:
     image: postgres:11.3-alpine
