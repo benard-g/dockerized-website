@@ -9,6 +9,7 @@ import NameValidator from "../validators/NameValidator";
 import PasswordValidator from "../validators/PasswordValidator";
 
 import PasswordService from "../services/PasswordService";
+import JwtService from "../services/JwtService";
 
 
 class AuthLocalController {
@@ -20,6 +21,7 @@ class AuthLocalController {
     private readonly passwordValidator: PasswordValidator;
 
     private readonly passwordService: PasswordService;
+    private readonly jwtService: JwtService;
 
     constructor(
         userRepository: UserRepository,
@@ -28,13 +30,15 @@ class AuthLocalController {
         nameValidator: NameValidator,
         passwordValidator: PasswordValidator,
 
-        passwordService: PasswordService
+        passwordService: PasswordService,
+        jwtService: JwtService
     ) {
         this.userRepository = userRepository;
         this.emailValidator = emailValidator;
         this.nameValidator = nameValidator;
         this.passwordValidator = passwordValidator;
         this.passwordService = passwordService;
+        this.jwtService = jwtService;
     }
 
     public readonly registerUser = async (req: Request, res: Response) => {
@@ -78,6 +82,28 @@ class AuthLocalController {
                 name: createdUser.name,
                 email: createdUser.email
             }
+        });
+    };
+
+    public readonly loginUser = async (req: Request, res: Response) => {
+        const userEmail: string = req.body.email;
+        const userPassword: string = req.body.password;
+
+        if (!userEmail || !userPassword) {
+            throw Boom.badRequest("Missing fields");
+        }
+
+        const user = await this.userRepository.getUserByEmail(userEmail);
+        if (!user
+            || !this.passwordService.validatePassword(user.cipheredPassword, userPassword)) {
+            throw Boom.unauthorized("Invalid email or password");
+        }
+
+        const userToken = this.jwtService.tokenize({ id: user.id });
+
+        res.status(200).json({
+            message: "Success",
+            token: userToken
         });
     };
 }
