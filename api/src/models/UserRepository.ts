@@ -22,6 +22,12 @@ class UserRepository {
             .getRepository(User)
             .findOne({ where: { email: email } });
     };
+
+    public readonly getUserById = async (id: number): Promise<User | undefined> => {
+        return this.conn
+            .getRepository(User)
+            .findOne({ where: { id: id } });
+    };
 }
 
 
