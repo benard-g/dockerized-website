@@ -17,10 +17,10 @@ module.exports = {
     logging: false,
 
     entities: [
-        "build/models/entities/*{.ts,.js}"
+        "src/models/entities/*.ts"
     ],
     migrations: [
-        "build/models/migrations/*{.ts,.js}"
+        "src/models/migrations/*.ts"
     ],
     cli: {
         migrationsDir: "src/models/migrations"

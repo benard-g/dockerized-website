@@ -3,11 +3,10 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "start": "node build/main.js",
+        "start": "ts-node src/main.ts",
         "dev": "nodemon -L",
-        "build": "tsc",
         "test": "jest",
-        "typeorm": "typeorm"
+        "typeorm": "ts-node ./node_modules/typeorm/cli.js"
     },
     "author": "Guillaume Benard",
     "license": "MIT",
@@ -19,6 +18,7 @@
         "morgan": "^1.9.1",
         "pg": "^7.11.0",
         "reflect-metadata": "^0.1.13",
+        "ts-node": "^8.3.0",
         "typeorm": "^0.2.18"
     },
     "devDependencies": {
@@ -32,7 +32,6 @@
         "jest": "^24.8.0",
         "nodemon": "^1.19.1",
         "ts-jest": "^24.0.2",
-        "ts-node": "^8.3.0",
         "typescript": "^3.5.2"
     }
 }
