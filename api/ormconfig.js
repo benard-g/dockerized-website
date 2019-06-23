@@ -26,3 +26,5 @@ module.exports = {
         migrationsDir: "src/models/migrations"
     }
 };
+
+console.log(module.exports);
