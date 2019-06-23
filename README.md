@@ -1,5 +1,7 @@
 # Dockerized WebSite !
 
+[![Build Status](https://travis-ci.org/benard-g/dockerized-website.svg?branch=master)](https://travis-ci.org/benard-g/dockerized-website)
+
 A Node.js project built around Docker.
 
 The goal of this project is to build a complete setup that allows to develop on a FullStack application without any other dependency than docker.
