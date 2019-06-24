@@ -13,7 +13,6 @@ class PasswordValidator {
     }
 
     public readonly validate = (password: string): boolean => {
-        password = password.trim();
         return password.length >= 8
             && this.containsDigitRegex.test(password)
             && this.containsLowercaseRegex.test(password)
