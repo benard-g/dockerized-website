@@ -11,6 +11,8 @@ import PasswordValidator from "../validators/PasswordValidator";
 import PasswordService from "../services/PasswordService";
 import JwtService from "../services/JwtService";
 
+import trim from "../utils/string/trim";
+
 
 class AuthLocalController {
 
@@ -42,9 +44,9 @@ class AuthLocalController {
     }
 
     public readonly registerUser = async (req: Request, res: Response) => {
-        const userName: string = req.body.name;
-        const userEmail: string = req.body.email;
-        const userPassword: string = req.body.password;
+        const userName = trim(req.body.name);
+        const userEmail = trim(req.body.email);
+        const userPassword = trim(req.body.password);
 
         if (!userName || !userEmail || !userPassword) {
             throw Boom.badRequest("Missing fields in user");
@@ -86,8 +88,8 @@ class AuthLocalController {
     };
 
     public readonly loginUser = async (req: Request, res: Response) => {
-        const userEmail: string = req.body.email;
-        const userPassword: string = req.body.password;
+        const userEmail = trim(req.body.email);
+        const userPassword = trim(req.body.password);
 
         if (!userEmail || !userPassword) {
             throw Boom.badRequest("Missing fields");
